@@ -17,9 +17,15 @@ public class User {
 	private String userName;
 	private String password;
 	private ArrayList<Usluge> services;
+	private boolean userAktivan;
+	private boolean userLogged;
+	private Date checkOut;
 	
 	//No args Constructor
 	public User(){
+		this.checkIn = new java.sql.Date(System.currentTimeMillis());
+		setUserAktivan(true);
+	
 	}
 	
 	//Constructor with specified arguments
@@ -35,6 +41,7 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.checkIn = new Date();
+		setUserAktivan(true);
 	}
 
 	//Getters and Setters
@@ -118,6 +125,14 @@ public class User {
 		this.password = password;
 	}
 
+	public final boolean userAktivan() {
+		return userAktivan;
+	}
+
+	public final void setUserAktivan(boolean userAktivan) {
+		this.userAktivan = userAktivan;
+	}
+	
 	public ArrayList<Usluge> getServices() {
 		return services;
 	}
