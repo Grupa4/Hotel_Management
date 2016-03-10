@@ -80,7 +80,7 @@ public class ConnectDB {
 
 	// Glavna metoda(za provjeru)
 	public static void main(String[] args) throws SQLException {
-
+//samo proba da li radi
 		ConnectDB db = new ConnectDB();
 		db.createDB();
 		db.createTableRooms();
