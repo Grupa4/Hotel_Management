@@ -79,7 +79,7 @@ public class ConnectDB {
 	}	
 	
 	//Create table services
-	public static void createTableServices(){
+	public void createTableServices(){
 		String query = "CREATE TABLE services (" 
 				+ "idUsluge INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				+ "nazivUsluge VARCHAR(20)," 
@@ -93,7 +93,9 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-
+	
+	/*
+	 * Main metodu smo prebacili u ManagementInterface
 	// Glavna metoda(za provjeru)
 	public static void main(String[] args) throws SQLException {
 //samo proba da li radi
@@ -105,4 +107,5 @@ public class ConnectDB {
 
 		System.out.println("Pozdrav");
 	}
+	*/
 }
