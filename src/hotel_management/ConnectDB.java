@@ -108,6 +108,38 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
+	
+	//Insert object into table users
+	public void updateUser(User user) throws SQLException {
+		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn, userName, password) VALUES('"
+				+ user.getName()
+				+ "', '"
+				+ user.getSurname()
+				+ "', '"
+				+ user.getGender()
+				+ "', '"
+				+ user.getIdCard()
+				+ "', "
+				+ user.getAge()
+				+ ", "
+				+ user.getRoomNumber()
+				+ ", "
+				+ user.getRoomType()
+				+ ", '"
+				+ user.getCheckIn()
+				+ "', '"
+				+ user.getUserName() + "', '" + user.getPassword() + "')";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table users updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	
 		
 	 // Main metodu smo prebacili u ManagementInterface
 	// Glavna metoda(za provjeru)

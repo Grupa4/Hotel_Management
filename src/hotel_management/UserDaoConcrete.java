@@ -1,30 +1,28 @@
 package hotel_management;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-
-
-public class UserDaoConcrete implements UserDao{
+public class UserDaoConcrete implements UserDao {
 
 	@Override
 	public void updateUser() throws SQLException {
-		
-	}
+			}
 
 	@Override
 	public void dodajUser() throws SQLException {
-		
+
 	}
 
 	@Override
 	public void odjaviUser() throws SQLException {
-		
+
 	}
 
 	@Override
 	public void pretraziUsers() throws SQLException {
-		
+
 	}
 
 	@Override
@@ -32,5 +30,4 @@ public class UserDaoConcrete implements UserDao{
 		return null;
 	}
 
-	
 }
