@@ -101,6 +101,7 @@ public class ConnectDB {
 		db.createDB();
 		db.createTableRooms();
 		db.createTableUsers();
+		db.createTableServices();
 
 		System.out.println("Pozdrav");
 	}
