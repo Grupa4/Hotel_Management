@@ -3,8 +3,6 @@ package hotel_management;
 import java.util.ArrayList;
 import java.util.Date;
 
-import sun.org.mozilla.javascript.internal.ast.NewExpression;
-
 public class User {
 	
 	//Data fields
