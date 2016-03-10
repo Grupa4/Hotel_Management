@@ -1,6 +1,9 @@
 package hotel_management;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import sun.org.mozilla.javascript.internal.ast.NewExpression;
 
 public class User {
 	
@@ -15,6 +18,7 @@ public class User {
 	private Date checkIn;
 	private String userName;
 	private String password;
+	private ArrayList<Usluge> services;
 	
 	//No args Constructor
 	public User(){
@@ -114,5 +118,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public ArrayList<Usluge> getServices() {
+		return services;
+	}
+
+	public void setServices(int idUsluge, String nazivUsluge, double cijenaUsluge) {
+		this.services.add(new Usluge(idUsluge, nazivUsluge, cijenaUsluge));
 	}
 }

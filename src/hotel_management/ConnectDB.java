@@ -77,6 +77,22 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}	
+	
+	//Create table services
+	public static void createTableServices(){
+		String query = "CREATE TABLE services (" 
+				+ "idUsluge INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+				+ "nazivUsluge VARCHAR(20)," 
+				+ "cijenaUsluge INTEGER(4))";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table services created successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
 
 	// Glavna metoda(za provjeru)
 	public static void main(String[] args) throws SQLException {
