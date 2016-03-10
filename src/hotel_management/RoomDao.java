@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public interface RoomDao {
 	
-	public void updateRoom() throws SQLException;
-	public void occupyRoom() throws SQLException;
-	public void vacatyRoom() throws SQLException;
+	public void updateRoom(int number) throws SQLException;
+	public void occupyRoom(int number) throws SQLException;
+	public void vacatyRoom(int number) throws SQLException;
 	public ArrayList<Room> getRooms() throws SQLException;	
 
 }
