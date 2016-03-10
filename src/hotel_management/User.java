@@ -21,7 +21,7 @@ public class User {
 	private boolean userLogged;
 	private Date checkOut;
 	
-	//e po koji puta proba
+	//e po koji puta probaaaa
 	//No args Constructor
 	public User(){
 		this.checkIn = new java.sql.Date(System.currentTimeMillis());
