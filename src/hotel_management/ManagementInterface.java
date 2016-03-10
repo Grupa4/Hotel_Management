@@ -11,7 +11,7 @@ public class ManagementInterface {
 		db.createTableRooms();
 		db.createTableUsers();
 		db.createTableServices();
-
+		
 		System.out.println("Pozdrav");
 		
 		//Ponuda opcija za ADMINA
@@ -28,6 +28,34 @@ public class ManagementInterface {
 		System.out.println("9 - brisi usluge");//Brise usluge hotela u bazi
 		System.out.println("10 - EDIT usluge ");//mijenja karakteristike usluga u bazi
 		System.out.println("0 - IZLAZ");
+		
+		//Objekat za unos i provjeru unosa
+		Unos unos=new Unos();
+		int izbor=unos.provjeraInt();
+		
+		if(izbor==1){
+			//ovdje trebamo ubaciti nase metode, objekte ili sta vec treba
+		}else if(izbor==2){
+			
+		}else if(izbor==3){
+			
+		}else if(izbor==4){
+			
+		}else if(izbor==5){
+			
+		}else if(izbor==6){
+			
+		}else if(izbor==7){
+			
+		}else if(izbor==8){
+			
+		}else if(izbor==9){
+			
+		}else if(izbor==10){
+			
+		}else if(izbor==0){
+			
+		}
 		
 	}
 }
