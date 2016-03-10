@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
-	
-	//Data fields
+
+	// Data fields
 	private String name;
 	private String surname;
 	private char gender;
@@ -20,18 +20,17 @@ public class User {
 	private boolean userAktivan;
 	private boolean userLogged;
 	private Date checkOut;
-	
-	//e po koji puta probaa da li radi
-	//No args Constructor
-	public User(){
+
+	// No args Constructor
+	public User() {
 		this.checkIn = new java.sql.Date(System.currentTimeMillis());
 		setUserAktivan(true);
-	
+
 	}
-	
-	//Constructor with specified arguments
-	public User(String name, String surname, char gender, String idCard, int age,
-			int roomNumber, int roomType, String userName, String password){
+
+	// Constructor with specified arguments
+	public User(String name, String surname, char gender, String idCard, int age, int roomNumber, int roomType,
+			String userName, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
@@ -45,7 +44,7 @@ public class User {
 		setUserAktivan(true);
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public String getName() {
 		return name;
 	}
@@ -133,12 +132,25 @@ public class User {
 	public final void setUserAktivan(boolean userAktivan) {
 		this.userAktivan = userAktivan;
 	}
-	
+
 	public ArrayList<Usluge> getServices() {
 		return services;
 	}
 
+	public boolean userLogged() {
+		return userLogged;
+	}
+
+	public void setUserLogged(boolean userLogged) {
+		this.userLogged = userLogged;
+	}
+
 	public void setServices(int idUsluge, String nazivUsluge, double cijenaUsluge) {
 		this.services.add(new Usluge(idUsluge, nazivUsluge, cijenaUsluge));
+	}
+
+	// ovdje nam treba metoda za ispis mislim da bi se moglo jos nesto dodat
+	public String toString() {
+		return "Name " + name + " surname " + surname + " userName " + userName;
 	}
 }
