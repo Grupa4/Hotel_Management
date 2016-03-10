@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ConnectDB {
 
@@ -44,7 +45,7 @@ public class ConnectDB {
 				+ "number INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				+ "type VARCHAR(20)," 
 				+ "dayPrice INTEGER(4)," 
-				+ "ocupied VARCHAR(5))";
+				+ "occupied BIT)";
 
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
@@ -79,7 +80,7 @@ public class ConnectDB {
 	}	
 	
 	//Create table services
-	public void createTableServices(){
+	public void createTableServices() throws SQLException{
 		String query = "CREATE TABLE services (" 
 				+ "idUsluge INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				+ "nazivUsluge VARCHAR(20)," 
@@ -94,8 +95,21 @@ public class ConnectDB {
 		}
 	}
 	
-	/*
-	 * Main metodu smo prebacili u ManagementInterface
+	//Insert object into table rooms
+	public void updateRoom(Room room) throws SQLException{
+		String query = "INSERT INTO rooms(number, type, dayPrice, occupied) VALUES(" + room.getNumber() 
+				+ ", '" + room.getType() + "', " + room.getDayPrice() + ", " + room.getOccupied() + ")";
+		
+		try(Statement statement = ConnectDB.getConnected().createStatement();) {
+			
+			statement.executeUpdate(query);
+			System.out.println("Table rooms updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+		
+	 // Main metodu smo prebacili u ManagementInterface
 	// Glavna metoda(za provjeru)
 	public static void main(String[] args) throws SQLException {
 //samo proba da li radi
@@ -104,8 +118,26 @@ public class ConnectDB {
 		db.createTableRooms();
 		db.createTableUsers();
 		db.createTableServices();
-
+		
+		ArrayList<Room> list = new ArrayList<>();
+		list.add(new Room(1, "1-bed", 20, false));
+		list.add(new Room(2, "1-bed", 20, false));
+		list.add(new Room(3, "1-bed", 20, false));
+		list.add(new Room(4, "1-bed", 20, false));
+		list.add(new Room(5, "2-bed", 30, false));
+		list.add(new Room(6, "2-bed", 30, false));
+		list.add(new Room(7, "2-bed", 30, false));
+		list.add(new Room(8, "2-bed", 30, false));
+		list.add(new Room(9, "apartment", 40, false));
+		list.add(new Room(10, "apartment", 40, false));
+		list.add(new Room(11, "apartment", 40, false));
+		list.add(new Room(12, "apartment", 40, false));
+		
+		for(int i = 0; i < 12; i++){
+			db.updateRoom(list.get(i));
+		}
+	
 		System.out.println("Pozdrav");
 	}
-	*/
+	
 }
