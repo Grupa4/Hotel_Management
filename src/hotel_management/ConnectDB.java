@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ConnectDB {
 
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "password";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 
@@ -139,7 +139,7 @@ public class ConnectDB {
 	}
 
 	// Insert object into table Usluge
-	public void updateUsluge(Usluge usluge) throws SQLException {
+	public void insertUsluge(Usluge usluge) throws SQLException {
 		String query = "INSERT INTO services(idUsluge,nazivUsluge,cijenaUsluge) VALUES("
 				+ usluge.getIdUsluge()
 				+ ", '"
@@ -149,7 +149,36 @@ public class ConnectDB {
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);
-			System.out.println("Table users updated successfully!");
+			System.out.println("Table services updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+
+	// Updates an element in table usluge
+	public void updateUsluge(Usluge usluge) throws SQLException {
+		String query = "UPDATE services SET nazivUsluge='"
+				+ usluge.getNazivUsluge() + "', cijenaUsluge="
+				+ usluge.getCijenaUsluge() + " WHERE idUsluge="
+				+ usluge.getIdUsluge();
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table services updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+
+	// Delete object from table Usluge
+	public void obrisiUsluge(int idUsluge) throws SQLException {
+		String query = "DELETE FROM services where idUsluge=" + idUsluge;
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table services updated successfully!");
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
