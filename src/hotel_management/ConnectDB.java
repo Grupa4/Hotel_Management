@@ -18,7 +18,8 @@ public class ConnectDB {
 
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection(CONN_STRING + DB, USERNAME, PASSWORD);
+			connection = DriverManager.getConnection(CONN_STRING + DB,
+					USERNAME, PASSWORD);
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 		}
@@ -29,7 +30,8 @@ public class ConnectDB {
 	public void createDB() throws SQLException {
 		String query = "CREATE DATABASE hotel_management";
 
-		try (Connection connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+		try (Connection connection = DriverManager.getConnection(CONN_STRING,
+				USERNAME, PASSWORD);
 				Statement statement = connection.createStatement();) {
 
 			statement.executeUpdate(query);
@@ -41,10 +43,9 @@ public class ConnectDB {
 
 	// Create table rooms
 	public void createTableRooms() throws SQLException {
-		String query = "CREATE TABLE rooms (" 
+		String query = "CREATE TABLE rooms ("
 				+ "number INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-				+ "type VARCHAR(20)," 
-				+ "dayPrice INTEGER(4)," 
+				+ "type VARCHAR(20)," + "dayPrice INTEGER(4),"
 				+ "occupied BIT)";
 
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
@@ -55,20 +56,15 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-	
-	//Create table users
+
+	// Create table users
 	public void createTableUsers() throws SQLException {
 
-		String query = "CREATE TABLE users (" 
-				+ "name VARCHAR(30)," 
-				+ "surname VARCHAR(30)," 
-				+ "gender VARCHAR(10),"
-				+ "idCard VARCHAR(20) NOT NULL," 
-				+ "age INTEGER(99)," 
-				+ "roomNumber INTEGER(50),"
-				+ "roomType INTEGER(10)," 
-				+ "checkIn DATE ," 
-				+ "userName VARCHAR(20)," 
+		String query = "CREATE TABLE users (" + "name VARCHAR(30),"
+				+ "surname VARCHAR(30)," + "gender VARCHAR(10),"
+				+ "idCard VARCHAR(20) NOT NULL," + "age INTEGER(99),"
+				+ "roomNumber INTEGER(50)," + "roomType INTEGER(10),"
+				+ "checkIn DATE ," + "userName VARCHAR(20),"
 				+ "password VARCHAR(12))";
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
@@ -77,14 +73,13 @@ public class ConnectDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-	}	
-	
-	//Create table services
-	public void createTableServices() throws SQLException{
-		String query = "CREATE TABLE services (" 
+	}
+
+	// Create table services
+	public void createTableServices() throws SQLException {
+		String query = "CREATE TABLE services ("
 				+ "idUsluge INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-				+ "nazivUsluge VARCHAR(20)," 
-				+ "cijenaUsluge INTEGER(4))";
+				+ "nazivUsluge VARCHAR(20)," + "cijenaUsluge INTEGER(4))";
 
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
@@ -94,22 +89,26 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-	
-	//Insert object into table rooms
-	public void updateRoom(Room room) throws SQLException{
-		String query = "INSERT INTO rooms(number, type, dayPrice, occupied) VALUES(" + room.getNumber() 
-				+ ", '" + room.getType() + "', " + room.getDayPrice() + ", " + room.getOccupied() + ")";
-		
-		try(Statement statement = ConnectDB.getConnected().createStatement();) {
-			
+
+	// Insert object into table rooms
+	public void updateRoom(Room room) throws SQLException {
+		String query = "INSERT INTO rooms(number, type, dayPrice, occupied) VALUES("
+				+ room.getNumber()
+				+ ", '"
+				+ room.getType()
+				+ "', "
+				+ room.getDayPrice() + ", " + room.getOccupied() + ")";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
 			statement.executeUpdate(query);
 			System.out.println("Table rooms updated successfully!");
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
-	
-	//Insert object into table users
+
+	// Insert object into table users
 	public void updateUser(User user) throws SQLException {
 		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn, userName, password) VALUES('"
 				+ user.getName()
@@ -138,19 +137,34 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-	
-	
-		
-	 // Main metodu smo prebacili u ManagementInterface
+
+	// Insert object into table Usluge
+	public void updateUsluge(Usluge usluge) throws SQLException {
+		String query = "INSERT INTO services(idUsluge,nazivUsluge,cijenaUsluge) VALUES("
+				+ usluge.getIdUsluge()
+				+ ", '"
+				+ usluge.getNazivUsluge()
+				+ "', " + usluge.getCijenaUsluge() + ")";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table users updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+
+	// Main metodu smo prebacili u ManagementInterface
 	// Glavna metoda(za provjeru)
 	public static void main(String[] args) throws SQLException {
-//samo proba da li radi
+		// samo proba da li radi
 		ConnectDB db = new ConnectDB();
 		db.createDB();
 		db.createTableRooms();
 		db.createTableUsers();
 		db.createTableServices();
-		
+
 		ArrayList<Room> list = new ArrayList<>();
 		list.add(new Room(1, "1-bed", 20, false));
 		list.add(new Room(2, "1-bed", 20, false));
@@ -164,12 +178,12 @@ public class ConnectDB {
 		list.add(new Room(10, "apartment", 40, false));
 		list.add(new Room(11, "apartment", 40, false));
 		list.add(new Room(12, "apartment", 40, false));
-		
-		for(int i = 0; i < 12; i++){
+
+		for (int i = 0; i < 12; i++) {
 			db.updateRoom(list.get(i));
 		}
-	
+
 		System.out.println("Pozdrav");
 	}
-	
+
 }
