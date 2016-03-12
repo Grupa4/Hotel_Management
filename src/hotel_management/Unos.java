@@ -18,7 +18,6 @@ public class Unos {
 				unos.nextLine();
 			}
 		}
-		unos.close();
 		return unosKorisnika;
 	}// Kraj metode
 
