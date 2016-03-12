@@ -2,9 +2,11 @@ package hotel_management;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ConnectDB {
 
@@ -64,7 +66,9 @@ public class ConnectDB {
 				+ "surname VARCHAR(30)," + "gender VARCHAR(10),"
 				+ "idCard VARCHAR(20) NOT NULL," + "age INTEGER(99),"
 				+ "roomNumber INTEGER(50)," + "roomType INTEGER(10),"
-				+ "checkIn DATE ,"+"checkInMillis BIGINT, " + "userName VARCHAR(20),"+ "password VARCHAR(12))";
+				+ "checkIn DATE ," + "checkInMillis BIGINT, "
+				+ "userName VARCHAR(20)," + "password VARCHAR(12),"
+				+ "servicesIDs VARCHAR(50)" + ")";
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);
@@ -137,6 +141,8 @@ public class ConnectDB {
 		}
 	}
 
+	
+
 	// Insert object into table Usluge
 	public void insertUsluge(Usluge usluge) throws SQLException {
 		String query = "INSERT INTO services(idUsluge,nazivUsluge,cijenaUsluge) VALUES("
@@ -181,6 +187,35 @@ public class ConnectDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
+	}
+	
+	//Metoda za provjeru passworda i username
+	public String provjeriKorisnika(String username, String password){
+		String query1 = "SELECT idCard FROM users WHERE userName LIKE '"+username+"' ";
+		String query2 = "SELECT idCard FROM users WHERE password LIKE '"+password+"' ";
+		
+		//Provjera username-a
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+			statement.executeQuery(query1);
+			System.out.println("Username UREDU---------------");
+		} catch (SQLException e) {
+			System.out.println(e);
+			System.out.println("Username ne postoji!");
+		}
+		
+		//Provjera password-a;
+		String idKorisnika="";
+		try (Statement statement2 = ConnectDB.getConnected().createStatement();) {
+			ResultSet resultSet = statement2.executeQuery(query2);
+			resultSet.next();
+			idKorisnika=resultSet.getString(1);
+			System.out.println("Password UREDU--------------------");
+		}catch (SQLException ex) {
+			System.out.println("Password pogresan!");
+		}
+		
+		return idKorisnika;
+		
 	}
 
 	// Main metodu smo prebacili u ManagementInterface

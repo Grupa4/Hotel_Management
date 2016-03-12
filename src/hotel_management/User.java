@@ -1,5 +1,8 @@
 package hotel_management;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -133,6 +136,35 @@ public class User {
 
 	public final void setUserAktivan(boolean userAktivan) {
 		this.userAktivan = userAktivan;
+	}
+	
+	//Dodavanje usluge korisniku
+	public void setUslugu(int idUsluge){
+		String query = "SELECT * FROM [services] where idCard like '"+idUsluge+"'";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			ResultSet resultSet = statement.executeQuery(query);
+			int idUs=resultSet.getInt(1);
+			String nazivUsluge=resultSet.getString(2);
+			double cijenaUsluge=resultSet.getDouble(3);
+			
+			this.services.add(new Usluge(idUs, nazivUsluge, cijenaUsluge));
+			
+			System.out.println("Usluga uspjesno dodana!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	//Brisanje usluge korisnika
+	public void obrisiUslugu(int indeksUsluge){
+		try {
+			this.services.remove(indeksUsluge);
+			System.out.println("Usluga "+this.services.get(indeksUsluge)+" obrisana!");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Indeks ne postoji!");
+		}
 	}
 
 	public ArrayList<Usluge> getServices() {
