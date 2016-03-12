@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ConnectDB {
 
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 
@@ -64,8 +64,7 @@ public class ConnectDB {
 				+ "surname VARCHAR(30)," + "gender VARCHAR(10),"
 				+ "idCard VARCHAR(20) NOT NULL," + "age INTEGER(99),"
 				+ "roomNumber INTEGER(50)," + "roomType INTEGER(10),"
-				+ "checkIn DATE ," + "userName VARCHAR(20),"
-				+ "password VARCHAR(12))";
+				+ "checkIn DATE ,"+"checkInMillis BIGINT, " + "userName VARCHAR(20),"+ "password VARCHAR(12))";
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);

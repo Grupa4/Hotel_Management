@@ -28,7 +28,7 @@ public class ManagementInterface {
 		System.out.println("2 - registruj korisnika"); // Kreira objekat User i
 														// proslijedi ga u bazu
 														// podataka Users
-		System.out.println("3 - EDIT korisnika"); // Bira korisnika iz baze,
+		System.out.println("3 - EDIT korisnika (CheckIN)"); // Bira korisnika iz baze,
 													// nudi promjenu podataka i
 													// vrsi update u bazi
 													// podataka

@@ -18,4 +18,11 @@ public interface UserDao {
 
 	public ArrayList<User> getUsers() throws SQLException;
 
+	// Evo i ja sam dodao jos jednu metodu. Kada je pokrenemo sistem od tog
+	// trenutnka primi gosta u hotel. Uveo sam ovo zbog metode dodajUser, u
+	// njoj bismo samo trebali dodati korisnika kojeg nema u bazi, a ukoliko bi
+	// neki stari korisnik dosao onda ga samo nadjemo u bazi i checkiramo u
+	// hotel
+	public void checkInUser() throws SQLException;
+
 }
