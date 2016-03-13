@@ -59,7 +59,7 @@ public class ManagementInterface {
 				/*
 				 * treba metoda za uredan ispis
 				 */
-				System.out.println(user.getUsers());
+				ispisiKorisnike(user.getUsers());
 			} else if (opcija == 2) {
 				UserDaoConcrete user = new UserDaoConcrete();
 				System.out.println("Unesite ime ili maticni broj korisnika:");
@@ -189,10 +189,50 @@ public class ManagementInterface {
 		}
 	}//Kraj metode
 	
-	//Metoda za kreiranje novo objekta korisnika/////////
+	//Metoda ispis korisnika /////////////////////////
+		public void ispisiKorisnike(ArrayList<User> lista){
+			if (lista.size()==0) {
+				System.out.println("Lista je prazna");
+			}else{
+			//Ispis naziva kolona
+			System.out.printf("%15s","---name---   ");
+			System.out.printf("%15s","--surname--   ");
+			System.out.printf("%8s","-gender-");
+			System.out.printf("%20s","  -----idCard------ ");
+			System.out.printf("%8s"," -age-  ");
+			System.out.printf("%14s"," roomNumber   ");
+			System.out.printf("%12s"," roomType   ");
+			System.out.printf("%12s"," checkIn  -");
+			System.out.printf("%12s"," checkOut -");
+			System.out.printf("%20s","  ---username---    ");
+			System.out.printf("%12s","- password -");
+			System.out.printf("%12s"," userLogged ");
+			System.out.println();
+			//Ispis pojedinih clanova
+			for (int i = 0; i < lista.size(); i++) {
+				System.out.printf("%15s",lista.get(i).getName()+" |");
+				System.out.printf("%15s",lista.get(i).getSurname()+" |");
+				System.out.printf("%8s",lista.get(i).getGender()+" |");
+				System.out.printf("%20s",lista.get(i).getIdCard()+" |");
+				System.out.printf("%8s",lista.get(i).getAge()+" |");
+				System.out.printf("%14s",lista.get(i).getRoomNumber()+" |");
+				System.out.printf("%12s",lista.get(i).getRoomType()+" |");
+				System.out.printf("%12s",lista.get(i).getCheckIn()+" |");
+				System.out.printf("%12s",lista.get(i).getCheckOut()+" |");
+				System.out.printf("%20s",lista.get(i).getUserName()+" |");
+				System.out.printf("%12s",lista.get(i).getPassword()+" |");
+				System.out.printf("%12s",lista.get(i).userLogged()+" |");
+				
+				System.out.println(); //Novi red
+			}
+			}
+		}//Kraj metode
+	
+	
+	//Metoda za kreiranje novog objekta korisnika/////////
 	public User napraviProfil(){
 		java.util.Scanner unos = new java.util.Scanner(System.in);
-		/*
+		
 		System.out.println("Unesite ime korisnika:");
 		String name=unos.next();
 		System.out.println("Unesite prezime:");
@@ -212,16 +252,8 @@ public class ManagementInterface {
 		System.out.println("Unesite password:");
 		String password=unos.next();
 		unos.nextLine(); //Da primi enter
-		*/
-		String name="amel";
-		String surname="ali";
-		char gender='m';
-		String idCard="1234";
-		int age=22;
-		int roomNumber=1;
-		int roomType=1;
-		String userName="amel";
-		String password="ali";
+		
+		
 		User user=new User(name, surname, gender, idCard, age, roomNumber, roomType, userName, password);
 		
 		return user;
