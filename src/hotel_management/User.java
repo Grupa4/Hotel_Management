@@ -215,7 +215,7 @@ public class User {
 	}
 	
 	//Metoda za obracun svih cijena//////////////////////////////
-	public double obracunajBoravak(int idKorisnika){
+	public double obracunajBoravak(String idKorisnika){
 		
 		long razlikaMillis=(this.checkOutTimeMillis-this.checkInTimeMillis);
 		int brojDana=(int)(razlikaMillis/(1000*60*60*24));

@@ -52,6 +52,7 @@ public class GuestInterface {
 			int izborGosta = input.nextInt();
 			if (izborGosta == 1) {
 				// ovjde ima neka greska ne znam rijesit
+				
 				double stanje = gost.obracunajBoravak(gost.getIdCard());
 				System.out.println("Vas racun je: " + stanje);
 			}
