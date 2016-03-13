@@ -11,7 +11,7 @@ import java.util.Date;
 public class ConnectDB {
 
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 
