@@ -40,8 +40,9 @@ public class GuestInterface {
 	}
 
 	// Metoda meni-a korisnika
-	public void meniKorisnika(User gost) throws Exception {
+	public void meniKorisnika() throws Exception {
 
+		User gost = new User();
 		System.out.println("Dobro dosli na nas hotel!");
 		Scanner input = new Scanner(System.in);
 
