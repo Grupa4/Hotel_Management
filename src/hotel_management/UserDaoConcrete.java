@@ -67,6 +67,7 @@ public class UserDaoConcrete implements UserDao {
 		}
 		rs.close();
 	}
+	
 
 	@Override
 	public void pretraziUsers(String name) throws SQLException {
