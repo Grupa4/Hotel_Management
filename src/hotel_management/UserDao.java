@@ -25,4 +25,7 @@ public interface UserDao {
 	// hotel
 	public void checkInUser() throws SQLException;
 
+	// evo ja sam dodala metodu ako je zanovjetalo pa hoce da mijenja sobu
+	public void promjenaSobe(String name, int brojSobe) throws SQLException;
+
 }
