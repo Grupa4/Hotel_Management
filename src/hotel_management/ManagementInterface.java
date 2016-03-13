@@ -118,9 +118,9 @@ public class ManagementInterface {
 			RoomDaoConcrete soba = new RoomDaoConcrete();
 
 			if (opcija == 1) {
-				System.out.println(soba.getRooms());
+				ispisiSobe(soba.getRooms());
 			} else if (opcija == 2) {
-				System.out.println(soba.getFreeRooms());
+				ispisiSobe(soba.getFreeRooms());
 			}
 
 		} else if (izbor == 5) {
@@ -223,6 +223,29 @@ public class ManagementInterface {
 				System.out.printf("%12s",lista.get(i).getPassword()+" |");
 				System.out.printf("%12s",lista.get(i).userLogged()+" |");
 				
+				System.out.println(); //Novi red
+			}
+			}
+		}//Kraj metode
+		
+		//Metoda ispis soba /////////////////////////
+		public void ispisiSobe(ArrayList<Room> lista){
+			if (lista.size()==0) {
+				System.out.println("Lista je prazna");
+			}else{
+			//Ispis naziva kolona
+			System.out.printf("%7s","idSobe ");
+			System.out.printf("%15s","--Naziv Sobe-- ");
+			System.out.printf("%12s","Cijena sobe ");
+			System.out.printf("%7s","-Zauzeto-");
+			
+			System.out.println();
+			//Ispis pojedinih clanova
+			for (int i = 0; i < lista.size(); i++) {
+				System.out.printf("%7s",lista.get(i).getNumber()+" |");
+				System.out.printf("%15s",lista.get(i).getType()+" |");
+				System.out.printf("%12s",lista.get(i).getDayPrice()+" |");
+				System.out.printf("%9s",lista.get(i).getOccupied()+" |");
 				System.out.println(); //Novi red
 			}
 			}
