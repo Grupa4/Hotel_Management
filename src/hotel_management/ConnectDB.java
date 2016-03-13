@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ConnectDB {
+	
+	static final String username = "root";
+	static final String password = "root";
 
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "password";
+	private static final String USERNAME = username;
+	private static final String PASSWORD = "";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 

@@ -177,30 +177,21 @@ public class UserDaoConcrete implements UserDao {
 	@Override
 	public String provjeriKorisnika(String username, String password) throws SQLException {
 		
-		 ArrayList<User> users=getUsers();
-		 boolean userNameUredu=false;
-		 boolean passwordUredu=false;
-		 String idCard="";
+		String query = "SELECT idCard, userName, password FROM users";
 		 
-		 for (int i = 0; i < users.size(); i++) {
-			 
-			 if (users.get(i).getUserName().equals(username)) {
-				userNameUredu=true;
-				if(users.get(i).getPassword().equals(password)){
-					passwordUredu=true;
-					idCard=users.get(i).getIdCard();
-					break;
-				}
+		try(Connection connection = ConnectDB.getConnected();
+			Statement statement = connection.createStatement();){
+			
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+				String id = resultSet.getString(1);
+				String name = resultSet.getString(2);
+				String pass = resultSet.getString(3);
+				if(name.equals(username) && pass.equals(password))
+					return id;
 			}
 		}
-		 
-		 if (!userNameUredu) {
-			System.out.println("Username ne postoji!");
-		}else if(!passwordUredu) {
-			System.out.println("Password nije uredu!");
-		}
-
-		 return idCard;
+		return null;
 	}
 
 	@Override
