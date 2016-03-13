@@ -117,7 +117,7 @@ public class ManagementInterface {
 			}else if (opcija==2) {
 				user.checkOutUser(idCard);
 			}else if (opcija==3) {
-			user.updateUser(napraviProfil());
+			user.updateUser(updateProfil(idCard));
 			}
 			
 			}
@@ -295,5 +295,33 @@ public class ManagementInterface {
 		
 		return user;
 	}//Kraj metode
+	
+	//Metoda za kreiranje novog objekta korisnika/////////
+		public User updateProfil(String idCard){
+			java.util.Scanner unos = new java.util.Scanner(System.in);
+			
+			System.out.println("Unesite ime korisnika:");
+			String name=unos.next();
+			System.out.println("Unesite prezime:");
+			String surname=unos.next();
+			System.out.println("Unesite spol:");
+			char gender=unos.next().charAt(0);
+			System.out.println("Unesite godine:");
+			int age=unos.nextInt();
+			System.out.println("Unesite broj sobe:");
+			int roomNumber=unos.nextInt();
+			System.out.println("Unesite tip sobe:");
+			int roomType=unos.nextInt();
+			System.out.println("Unesite korisnicko ime:");
+			String userName=unos.next();
+			System.out.println("Unesite password:");
+			String password=unos.next();
+			unos.nextLine(); //Da primi enter
+			
+			
+			User user=new User(name, surname, gender, idCard, age, roomNumber, roomType, userName, password);
+			
+			return user;
+		}//Kraj metode
 }
 

@@ -32,19 +32,19 @@ public class UserDaoConcrete implements UserDao {
 		*/
 		// Ovako spremljen string se lakse cita kada nam budu trebale usluge
 
-		String query = "UPDATE users SET name=" + gost.getName() + ", surname="
-				+ gost.getSurname() + ", gender=" + gost.getGender()
-				+ ", idCard=" + gost.getIdCard() + ", age=" + gost.getAge()
+		String query = "UPDATE users SET name='" + gost.getName() + "', surname='"
+				+ gost.getSurname() + "', gender='" + gost.getGender()
+				+ "', age=" + gost.getAge()
 				+ ", roomNumber=" + gost.getRoomNumber() + ", roomType="
-				+ gost.getRoomType() + ", checkIn=" + gost.getCheckIn()
-				+ ", checkInMillis=" + gost.getcheckInTimeMillis()
-				+ ", checkOut=" + gost.getCheckOut() + ", checkOutMillis="
-				+ gost.getCheckOutTimeMillis() + ", userName="
-				+ gost.getUserName() + ", password=" + gost.getPassword()
-				+ /*", services=" + servicesString +*/ ", userLogged="
+				+ gost.getRoomType() + ", checkIn='" + gost.getCheckIn()
+				+ "', checkInMillis=" + gost.getcheckInTimeMillis()
+				+ ", checkOut='" + gost.getCheckOut() + "', checkOutMillis="
+				+ gost.getCheckOutTimeMillis() + ", userName='"
+				+ gost.getUserName() + "', password='" + gost.getPassword()
+				+ /*", services=" + servicesString +*/ "', userLogged="
 				+ gost.userLogged() + " WHERE idCard LIKE '" + gost.getIdCard()
 				+ "'";
-
+		
 		try (Connection connection = ConnectDB.getConnected();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate(query);
