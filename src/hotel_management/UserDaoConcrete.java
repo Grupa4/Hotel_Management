@@ -39,7 +39,8 @@ public class UserDaoConcrete implements UserDao {
 				+ gost.getCheckOutTimeMillis() + ", userName="
 				+ gost.getUserName() + ", password=" + gost.getPassword()
 				+ ", services=" + servicesString + ", userLogged="
-				+ gost.userLogged()+" WHERE idCard LIKE '"+gost.getIdCard()+"'";
+				+ gost.userLogged() + " WHERE idCard LIKE '" + gost.getIdCard()
+				+ "'";
 
 		try (Connection connection = ConnectDB.getConnected();
 				Statement statement = connection.createStatement();) {
@@ -126,7 +127,7 @@ public class UserDaoConcrete implements UserDao {
 		// smjestamo koje ime trazimo
 		// String gostIme = input.next();
 		// query
-		String query = "SELECT * from users WHERE name like '" + name+"'";
+		String query = "SELECT * from users WHERE name like '" + name + "'";
 		ResultSet rs = null;
 		// konekcija i izvrsavanje querija
 		try (Connection connection = ConnectDB.getConnected();
@@ -161,15 +162,45 @@ public class UserDaoConcrete implements UserDao {
 			rs = statement.executeQuery(query);
 			rs.next();
 			// ispis
-			
+
 			System.out.println("Podaci o vasem trazenom gostu su :"
 					+ rs.getString("name") + rs.getString("surname")
 					+ rs.getInt("age") + rs.getString("idCard")
 					+ rs.getInt("roomNumber") + rs.getInt("roomType"));
-					
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	// Metoda za provjeru passworda i username i biranje idCard korisnika
+	@Override
+	public String provjeriKorisnika(String username, String password) throws SQLException {
+		
+		 ArrayList<User> users=getUsers();
+		 boolean userNameUredu=false;
+		 boolean passwordUredu=false;
+		 String idCard="";
+		 
+		 for (int i = 0; i < users.size(); i++) {
+			 
+			 if (users.get(i).getUserName().equals(username)) {
+				userNameUredu=true;
+				if(users.get(i).getPassword().equals(password)){
+					passwordUredu=true;
+					idCard=users.get(i).getIdCard();
+					break;
+				}
+			}
+		}
+		 
+		 if (!userNameUredu) {
+			System.out.println("Username ne postoji!");
+		}else if(!passwordUredu) {
+			System.out.println("Password nije uredu!");
+		}
+
+		 return idCard;
 	}
 
 	@Override
@@ -194,8 +225,8 @@ public class UserDaoConcrete implements UserDao {
 				gost.setCheckIn(rs.getString("checkIn"));
 				gost.setUserName(rs.getString("userName"));
 				gost.setPassword(rs.getString("password"));
-				//gost.setServices(kreirajListuUsluge(rs.getString("idCard")));
-				//gost.setUserAktivan(rs.getBoolean("userAktivan"));
+				// gost.setServices(kreirajListuUsluge(rs.getString("idCard")));
+				// gost.setUserAktivan(rs.getBoolean("userAktivan"));
 				gost.setUserLogged(rs.getBoolean("userLogged"));
 				gost.setCheckOut(rs.getString("checkOut"));
 				gosti.add(gost);

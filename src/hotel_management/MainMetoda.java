@@ -23,7 +23,8 @@ public class MainMetoda {
 		String password=unos.nextLine();
 		
 		//Provjera postoji li korisnik i citanje id-a
-		String idKorisnika=db.provjeriKorisnika(username, password);
+		UserDaoConcrete user=new UserDaoConcrete();
+		String idKorisnika=user.provjeriKorisnika(username, password);
 		
 		System.out.println(); //Prazan red
 		
@@ -32,7 +33,7 @@ public class MainMetoda {
 		ManagementInterface admin = new ManagementInterface();
 		admin.meniZaAdmina();
 		
-		}else {
+		}else if(!idKorisnika.equals("")) {
 		//Ulazimo u meni gosta
 		GuestInterface gost=new GuestInterface(idKorisnika);	
 		gost.meniKorisnika();

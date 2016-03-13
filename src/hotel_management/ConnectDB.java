@@ -11,7 +11,7 @@ import java.util.Date;
 public class ConnectDB {
 
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "password";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 
@@ -188,37 +188,6 @@ public class ConnectDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-	}
-
-	// Metoda za provjeru passworda i username
-	public String provjeriKorisnika(String username, String password) {
-		String query1 = "SELECT idCard FROM users WHERE userName LIKE '"
-				+ username + "' ";
-		String query2 = "SELECT idCard FROM users WHERE password LIKE '"
-				+ password + "' ";
-
-		// Provjera username-a
-		try (Statement statement = ConnectDB.getConnected().createStatement();) {
-			ResultSet resultSet = statement.executeQuery(query1);
-			resultSet.getString(1);
-			System.out.println("Username UREDU---------------");
-		} catch (SQLException e) {
-			System.out.println("Username ne postoji!");
-		}
-
-		// Provjera password-a;
-		String idKorisnika = "";
-		try (Statement statement2 = ConnectDB.getConnected().createStatement();) {
-			ResultSet resultSet = statement2.executeQuery(query2);
-			resultSet.next();
-			idKorisnika = resultSet.getString(1);
-			System.out.println("Password UREDU--------------------");
-		} catch (SQLException ex) {
-			System.out.println("Password pogresan!");
-		}
-
-		return idKorisnika;
-
 	}
 
 	// Main metodu smo prebacili u ManagementInterface
