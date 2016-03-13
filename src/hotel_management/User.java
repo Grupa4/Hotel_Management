@@ -29,7 +29,7 @@ public class User {
 	// No args Constructor
 	public User() {
 		setUserAktivan(true);
-
+		
 	}
 
 	// Constructor with specified arguments

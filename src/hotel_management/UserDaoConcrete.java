@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 public class UserDaoConcrete implements UserDao {
 
-	public void updateUser(User gost) throws SQLException {
+	public void updateUser() throws SQLException {
 		// metoda sa kojom mozemo da mijejammo ime prezme pol godine sobu i tip
 		// sobe kao i usluge koje nas gost zeli u hotelu
+		User gost = new User();
 		String query = "UPDATE users SET name='" + gost.getName() + "', surname=" + gost.getSurname() + ", gender="
 				+ gost.getGender() + ", age=" + gost.getAge() + ", roomNumber=" + gost.getRoomNumber() + ", roomType="
 				+ gost.getRoomNumber() + ", services=" + gost.getServices() + ", WHERE username='" + gost.getName()
@@ -25,12 +26,13 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void dodajUser(User gost) throws SQLException {
+	public void dodajUser() throws SQLException {
 		// metoda sa kojom dodajemo gosta u nasu tabelu
+		User user = new User();
 		String query = "INSERT into users(name, surname,gender,idCard,age,roomNumber,roomType,userName, password,services VALUES("
-				+ gost.getName() + ", '" + gost.getSurname() + ", '" + gost.getGender() + ", '" + gost.getIdCard()
-				+ ", '" + gost.getAge() + ", '" + gost.getRoomNumber() + ", '" + gost.getRoomType() + ", '"
-				+ gost.getUserName() + ", '" + gost.getPassword() + ", '" + gost.getServices() + "')";
+				+ user.getName() + ", '" + user.getSurname() + ", '" + user.getGender() + ", '" + user.getIdCard()
+				+ ", '" + user.getAge() + ", '" + user.getRoomNumber() + ", '" + user.getRoomType() + ", '"
+				+ user.getUserName() + ", '" + user.getPassword() + ", '" + user.getServices() + "')";
 		try (Connection connection = ConnectDB.getConnected(); Statement statement = connection.createStatement();) {
 			statement.executeQuery(query);
 			System.out.println("Uspjesno dodan gostu tabelu");
@@ -40,10 +42,11 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void odjaviUser(String idCard) throws SQLException {
+	public void odjaviUser() throws SQLException {
 		// sa ovom metodom odjavljujemo gosta iz nase baze ali nam njegovi
 		// podaci ostaju
-
+		User u = new User();
+		String idCard = u.getIdCard();
 		// query da izaberemo gosta na osnovu imena tj koga zelimo odjavimo
 		String query = "SELECT FROM user WHERE idCard = " + idCard;
 		// skener za citanje sa konzole
@@ -69,7 +72,7 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void pretraziUsers(String name) throws SQLException {
+	public void pretraziUsers() throws SQLException {
 		// trazimo goste u bazi na osnovu imena
 		Scanner input = new Scanner(System.in);
 		// ispis
@@ -94,7 +97,7 @@ public class UserDaoConcrete implements UserDao {
 
 	@Override
 	public ArrayList<User> getUsers() throws SQLException {
-		// dobijamo listu svih objekata tj gostiju koji se nalaze u nasoj tabeli 
+		// dobijamo listu svih objekata tj gostiju koji se nalaze u nasoj tabeli
 		ArrayList<User> gosti = new ArrayList<>();
 		String query = "SELECT * from users";
 		ResultSet rs = null;
@@ -127,35 +130,13 @@ public class UserDaoConcrete implements UserDao {
 
 	@Override
 	public void checkInUser() throws SQLException {
-		
+
 	}
 
 	@Override
 	public void promjenaSobe(User gost, int brojSobe) throws SQLException {
 		// TODO Auto-generated method stub
-		String query = " UPDATE user SET brojSobe= '" + brojSobe +"' WHERE userName = "+ gost.getUserName();
-		
-	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
+		String query = " UPDATE user SET brojSobe= '" + brojSobe + "' WHERE userName = " + gost.getUserName();
 
+	}
 }
