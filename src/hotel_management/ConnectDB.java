@@ -11,7 +11,7 @@ import java.util.Date;
 public class ConnectDB {
 
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "password";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 
@@ -53,6 +53,7 @@ public class ConnectDB {
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);
+			
 			System.out.println("Table rooms created successfully!");
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -67,8 +68,9 @@ public class ConnectDB {
 				+ "idCard VARCHAR(20) NOT NULL," + "age INTEGER(99),"
 				+ "roomNumber INTEGER(50)," + "roomType INTEGER(10),"
 				+ "checkIn DATE ," + "checkInMillis BIGINT, "
+				+ "checkOut DATE," + "checkOutMillis BIGINT, "
 				+ "userName VARCHAR(20)," + "password VARCHAR(12),"
-				+ "servicesIDs VARCHAR(50)" + ")";
+				+ "services TEXT," + "userLogged BOOLEAN" + ")";
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);
@@ -110,7 +112,8 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-
+	
+	
 	// Insert object into table users
 	public void updateUser(User user) throws SQLException {
 		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn, userName, password) VALUES('"
@@ -140,8 +143,6 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-
-	
 
 	// Insert object into table Usluge
 	public void insertUsluge(Usluge usluge) throws SQLException {
@@ -188,34 +189,36 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-	
-	//Metoda za provjeru passworda i username
-	public String provjeriKorisnika(String username, String password){
-		String query1 = "SELECT idCard FROM users WHERE userName LIKE '"+username+"' ";
-		String query2 = "SELECT idCard FROM users WHERE password LIKE '"+password+"' ";
-		
-		//Provjera username-a
+
+	// Metoda za provjeru passworda i username
+	public String provjeriKorisnika(String username, String password) {
+		String query1 = "SELECT idCard FROM users WHERE userName LIKE '"
+				+ username + "' ";
+		String query2 = "SELECT idCard FROM users WHERE password LIKE '"
+				+ password + "' ";
+
+		// Provjera username-a
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
-			statement.executeQuery(query1);
+			ResultSet resultSet = statement.executeQuery(query1);
+			resultSet.getString(1);
 			System.out.println("Username UREDU---------------");
 		} catch (SQLException e) {
-			System.out.println(e);
 			System.out.println("Username ne postoji!");
 		}
-		
-		//Provjera password-a;
-		String idKorisnika="";
+
+		// Provjera password-a;
+		String idKorisnika = "";
 		try (Statement statement2 = ConnectDB.getConnected().createStatement();) {
 			ResultSet resultSet = statement2.executeQuery(query2);
 			resultSet.next();
-			idKorisnika=resultSet.getString(1);
+			idKorisnika = resultSet.getString(1);
 			System.out.println("Password UREDU--------------------");
-		}catch (SQLException ex) {
+		} catch (SQLException ex) {
 			System.out.println("Password pogresan!");
 		}
-		
+
 		return idKorisnika;
-		
+
 	}
 
 	// Main metodu smo prebacili u ManagementInterface

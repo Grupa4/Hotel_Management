@@ -14,6 +14,7 @@ public class MainMetoda {
 		db.createTableRooms();
 		db.createTableUsers();
 		db.createTableServices();
+		CreateRooms cr=new CreateRooms();
 		
 		System.out.println("\nHOTEL SISTEM - DOBRODOSLI! \n");
 		System.out.println("Unesite username:");

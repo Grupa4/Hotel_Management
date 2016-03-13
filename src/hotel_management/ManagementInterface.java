@@ -56,19 +56,57 @@ public class ManagementInterface {
 
 			if (opcija == 1) {
 				UserDaoConcrete user = new UserDaoConcrete();
+				/*
+				 * treba metoda za uredan ispis
+				 */
 				System.out.println(user.getUsers());
 			} else if (opcija == 2) {
 				UserDaoConcrete user = new UserDaoConcrete();
-				user.pretraziUsers();
+				System.out.println("Unesite ime ili maticni broj korisnika:");
+				String podatak=unos2.next();
+				unos2.nextLine();
+				
+				if (Character.isDigit(podatak.charAt(0))) {
+					user.pretraziUsersIdCard(podatak);
+				}else if(Character.isLetter(podatak.charAt(0))){
+					user.pretraziUsersName(podatak);
+				}else {
+					System.out.println("Pogresan unos! \n");
+				}
+				
 			}
 		} else if (izbor == 2) {
 			// Dodavanje korisnika
 			UserDaoConcrete user = new UserDaoConcrete();
-			user.dodajUser();
+			User noviUser=napraviProfil();
+			System.out.println("Profil gotov");
+			user.dodajUser(noviUser);
+			
 		} else if (izbor == 3) {
 			// Update korisnika
 			UserDaoConcrete user = new UserDaoConcrete();
-			user.updateUser();
+			
+			System.out.println("Unesite maticni broj korisnika:");
+			String idCard=unos2.next();
+			
+			ArrayList<User> listaKorisnika= user.getUsers();
+			User korisnik=null;
+			boolean korisnikPostoji=false;
+			//Provjera broja
+			for (int i = 0; i < listaKorisnika.size(); i++) {
+				if(listaKorisnika.get(i).getIdCard().equals(idCard)){
+					korisnik=listaKorisnika.get(i);
+					korisnikPostoji=true;
+					break;
+				}
+			}
+			
+			if(!korisnikPostoji){
+				System.out.println("Trazeni broj ne postoji!");
+			}
+			
+			user.updateUser(napraviProfil());
+			
 		} else if (izbor == 4) {
 			// Provjera soba
 
@@ -148,7 +186,45 @@ public class ManagementInterface {
 			System.out.printf("%-15.2f",lista.get(i).getCijenaUsluge());
 			System.out.println(); //Novi red
 		}
-		}//Kraj metode
-	}
+		}
+	}//Kraj metode
+	
+	//Metoda za kreiranje novo objekta korisnika/////////
+	public User napraviProfil(){
+		java.util.Scanner unos = new java.util.Scanner(System.in);
+		/*
+		System.out.println("Unesite ime korisnika:");
+		String name=unos.next();
+		System.out.println("Unesite prezime:");
+		String surname=unos.next();
+		System.out.println("Unesite spol:");
+		char gender=unos.next().charAt(0);
+		System.out.println("Unesite maticni broj:");
+		String idCard=unos.next();
+		System.out.println("Unesite godine:");
+		int age=unos.nextInt();
+		System.out.println("Unesite broj sobe:");
+		int roomNumber=unos.nextInt();
+		System.out.println("Unesite tip sobe:");
+		int roomType=unos.nextInt();
+		System.out.println("Unesite korisnicko ime:");
+		String userName=unos.next();
+		System.out.println("Unesite password:");
+		String password=unos.next();
+		unos.nextLine(); //Da primi enter
+		*/
+		String name="amel";
+		String surname="ali";
+		char gender='m';
+		String idCard="1234";
+		int age=22;
+		int roomNumber=1;
+		int roomType=1;
+		String userName="amel";
+		String password="ali";
+		User user=new User(name, surname, gender, idCard, age, roomNumber, roomType, userName, password);
+		
+		return user;
+	}//Kraj metode
 }
 
