@@ -15,8 +15,9 @@ public class UserDaoConcrete implements UserDao {
 		// metoda sa kojom mozemo da mijejammo ime prezme pol godine sobu i tip
 		// sobe kao i usluge koje nas gost zeli u hotelu
 		// services moramo dodavati kao text u bazu podataka, na slijedeci nacin
-
+		/*
 		String servicesString = "";
+		if (!gost.getServices().get(0).getNazivUsluge().equals("")) {
 		for (int i = 0; i < gost.getServices().size(); i++) {
 			// Uzmemo sve podatke
 			int idUsluge = gost.getServices().get(i).getIdUsluge();
@@ -27,6 +28,8 @@ public class UserDaoConcrete implements UserDao {
 			servicesString += idUsluge + ", " + nazivUsluge + ", "
 					+ cijenaUsluge + ", \n ";
 		}
+		}
+		*/
 		// Ovako spremljen string se lakse cita kada nam budu trebale usluge
 
 		String query = "UPDATE users SET name=" + gost.getName() + ", surname="
@@ -38,7 +41,7 @@ public class UserDaoConcrete implements UserDao {
 				+ ", checkOut=" + gost.getCheckOut() + ", checkOutMillis="
 				+ gost.getCheckOutTimeMillis() + ", userName="
 				+ gost.getUserName() + ", password=" + gost.getPassword()
-				+ ", services=" + servicesString + ", userLogged="
+				+ /*", services=" + servicesString +*/ ", userLogged="
 				+ gost.userLogged() + " WHERE idCard LIKE '" + gost.getIdCard()
 				+ "'";
 
@@ -229,7 +232,17 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void checkInUser(User user) throws SQLException {
+	public void checkInUser(String idKorisnika) throws SQLException {
+		UserDaoConcrete korisnici=new UserDaoConcrete();
+		ArrayList<User>listaKorisnika=korisnici.getUsers();
+		User user=null;
+		
+		for (int i = 0; i < listaKorisnika.size(); i++) {
+			if (listaKorisnika.get(i).getIdCard().equals(idKorisnika)) {
+				user=listaKorisnika.get(i);
+				break;
+			}
+		}
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
@@ -241,7 +254,17 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void checkOutUser(User user) throws SQLException {
+	public void checkOutUser(String idKorisnika) throws SQLException {
+		UserDaoConcrete korisnici=new UserDaoConcrete();
+		ArrayList<User>listaKorisnika=korisnici.getUsers();
+		User user=null;
+		
+		for (int i = 0; i < listaKorisnika.size(); i++) {
+			if (listaKorisnika.get(i).getIdCard().equals(idKorisnika)) {
+				user=listaKorisnika.get(i);
+				break;
+			}
+		}
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
@@ -292,9 +315,9 @@ public class UserDaoConcrete implements UserDao {
 	// Uzimanje clanova do praznog zareza iz baze
 	public Usluge ocitajUslugu(String str) {
 		int i = 0;
-		String idBroj = "";
+		String idBroj = "0";
 		String naziv = "";
-		String cijena = "";
+		String cijena = "0";
 		char karakter = str.charAt(i);
 
 		do {
@@ -316,7 +339,7 @@ public class UserDaoConcrete implements UserDao {
 			i++;
 			karakter = str.charAt(i);
 		} while (karakter != ',');
-
+		
 		idBroj = idBroj.trim();
 		naziv = naziv.trim();
 		cijena = cijena.trim();

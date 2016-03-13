@@ -19,9 +19,9 @@ public interface UserDao {
 
 	public ArrayList<User> getUsers() throws SQLException;
 
-	public void checkInUser(User user) throws SQLException;
+	public void checkInUser(String idKorisnika) throws SQLException;
 	
-	public void checkOutUser(User user) throws SQLException;
+	public void checkOutUser(String idKorisnika) throws SQLException;
 
 	public void promjenaSobe(User gost, int brojSobe) throws SQLException;
 

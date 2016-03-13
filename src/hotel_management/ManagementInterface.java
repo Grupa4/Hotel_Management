@@ -84,6 +84,12 @@ public class ManagementInterface {
 			
 		} else if (izbor == 3) {
 			// Update korisnika
+			System.out.println("1 - checkIn");
+			System.out.println("2 - checkOut");
+			System.out.println("3 - EDIT korisnika");
+			System.out.println("0 - izlaz");
+			int opcija=unos2.nextInt();
+			
 			UserDaoConcrete user = new UserDaoConcrete();
 			
 			System.out.println("Unesite maticni broj korisnika:");
@@ -103,10 +109,18 @@ public class ManagementInterface {
 			
 			if(!korisnikPostoji){
 				System.out.println("Trazeni broj ne postoji!");
+			}else {
+				
+			
+			if (opcija==1) {
+				user.checkInUser(idCard);
+			}else if (opcija==2) {
+				user.checkOutUser(idCard);
+			}else if (opcija==3) {
+			user.updateUser(napraviProfil());
 			}
 			
-			user.updateUser(napraviProfil());
-			
+			}
 		} else if (izbor == 4) {
 			// Provjera soba
 

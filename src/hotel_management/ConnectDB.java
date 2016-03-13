@@ -119,7 +119,7 @@ public class ConnectDB {
 	
 	// Insert object into table users
 	public void updateUser(User user) throws SQLException {
-		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn, userName, password) VALUES('"
+		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn, userName, password,services) VALUES('"
 				+ user.getName()
 				+ "', '"
 				+ user.getSurname()
@@ -136,7 +136,7 @@ public class ConnectDB {
 				+ ", '"
 				+ user.getCheckIn()
 				+ "', '"
-				+ user.getUserName() + "', '" + user.getPassword() + "')";
+				+ user.getUserName() + "', '" + user.getPassword() +"',',"+ "')";
 
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
