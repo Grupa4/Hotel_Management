@@ -176,14 +176,14 @@ public class ManagementInterface {
 		}else{
 		//Ispis naziva kolona
 		System.out.printf("%9s","idUsluge ");
-		System.out.printf("%-22s"," Naziv Usluge");
-		System.out.printf("%-15s","Cijena usluge");
+		System.out.printf("%22s"," ----Naziv Usluge---- ");
+		System.out.printf("%15s"," Cijena usluge ");
 		System.out.println();
 		//Ispis pojedinih clanova
 		for (int i = 0; i < lista.size(); i++) {
-			System.out.printf("%9s",lista.get(i).getIdUsluge()+"  ");
-			System.out.printf("%-22s","  "+lista.get(i).getNazivUsluge());
-			System.out.printf("%-15.2f",lista.get(i).getCijenaUsluge());
+			System.out.printf("%9s",lista.get(i).getIdUsluge()+" |");
+			System.out.printf("%22s","  "+lista.get(i).getNazivUsluge()+" |");
+			System.out.printf("%15s",lista.get(i).getCijenaUsluge()+" |");
 			System.out.println(); //Novi red
 		}
 		}
