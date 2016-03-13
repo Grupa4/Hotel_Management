@@ -14,7 +14,7 @@ public class ConnectDB {
 	static final String password = "root";
 
 	private static final String USERNAME = username;
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "password";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/";
 	private static final String DB = "hotel_management";
 

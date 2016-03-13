@@ -40,9 +40,18 @@ public class GuestInterface {
 	}
 
 	// Metoda meni-a korisnika
-	public void meniKorisnika() throws Exception {
-
-		User gost = new User();
+	public void meniKorisnika(String idKorisnika) throws Exception {
+		UserDaoConcrete korisnici=new UserDaoConcrete();
+		ArrayList<User>listaKorisnika=korisnici.getUsers();
+		User gost=null;
+		
+		for (int i = 0; i < listaKorisnika.size(); i++) {
+			if (listaKorisnika.get(i).getIdCard().equals(idKorisnika)) {
+				gost=listaKorisnika.get(i);
+				break;
+			}
+		}
+		
 		System.out.println("Dobro dosli na nas hotel!");
 		Scanner input = new Scanner(System.in);
 

@@ -35,7 +35,7 @@ public class MainMetoda {
 				String idKorisnika = user.provjeriKorisnika(username, password);
 				System.out.println(); // Prazan red
 				GuestInterface gost = new GuestInterface(idKorisnika);
-				gost.meniKorisnika();
+				gost.meniKorisnika(idKorisnika);
 			} else {
 				System.out.println("Pogresan unos! Pokusajte ponovo!");
 				continue;
