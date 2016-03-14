@@ -35,8 +35,8 @@ public class UserDaoConcrete implements UserDao {
 		String query = "UPDATE users SET name='" + gost.getName() + "', surname='"
 				+ gost.getSurname() + "', gender='" + gost.getGender()
 				+ "', age=" + gost.getAge()
-				+ ", roomNumber=" + gost.getRoomNumber() + ", roomType="
-				+ gost.getRoomType() + ", checkIn='" + gost.getCheckIn()
+				+ ", roomNumber=" + gost.getRoomNumber() + ", roomType='"
+				+ gost.getRoomType() + "', checkIn='" + gost.getCheckIn()
 				+ "', checkInMillis=" + gost.getcheckInTimeMillis()
 				+ ", checkOut='" + gost.getCheckOut() + "', checkOutMillis="
 				+ gost.getCheckOutTimeMillis() + ", userName='"
