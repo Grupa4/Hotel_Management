@@ -138,8 +138,17 @@ public class User {
 		this.checkInTimeMillis=System.currentTimeMillis();
 		this.checkIn = checkIn;
 	}
+	
+	public void copyCheckIn(String checkIn) {
+		this.checkIn=checkIn;
+	}
+	
 	public long getcheckInTimeMillis(){
 		return this.checkInTimeMillis;
+	}
+	
+	public void copyCheckInMillis(long checkInMillis) {
+		this.checkInTimeMillis=checkInMillis;
 	}
 
 	public String getUserName() {
@@ -219,8 +228,16 @@ public class User {
 		return checkOut;
 	}
 	
+	public void copyCheckOut(String checkOut) {
+		this.checkOut=checkOut;
+	}
+	
 	public long getCheckOutTimeMillis(){
 		return this.checkOutTimeMillis;
+	}
+	
+	public void copyCheckOutMillis(long checkOutMillis) {
+		this.checkOutTimeMillis=checkOutMillis;
 	}
 
 	public void setCheckOut(String checkOut) {

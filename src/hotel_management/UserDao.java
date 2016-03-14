@@ -11,9 +11,9 @@ public interface UserDao {
 
 	public void odjaviUser(String idCard) throws SQLException;
 
-	public void pretraziUsersName(String name) throws SQLException;
+	public ArrayList<User> pretraziUsersName(String name) throws SQLException;
 	
-	public void pretraziUsersIdCard(String idCard) throws SQLException;
+	public ArrayList<User> pretraziUsersIdCard(String idCard) throws SQLException;
 	
 	public String provjeriKorisnika(String username, String password) throws SQLException;
 

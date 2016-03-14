@@ -18,11 +18,7 @@ public class ManagementInterface {
 		System.out.println("Pozdrav");
 
 		while (true) {
-			// Ponuda opcija za ADMINA
-			// Na osnovu ovih opcija mozemo sada smisljati objekte, metode i
-			// kako da
-			// rade
-
+			
 			System.out.println("1 - provjeri korisnike"); // Ispisuje listu
 															// (tabelu)
 															// nudi
@@ -34,7 +30,7 @@ public class ManagementInterface {
 															// proslijedi ga u
 															// bazu
 															// podataka Users
-			System.out.println("3 - EDIT korisnika (CheckIN,dodijeli sobu)"); // Bira
+			System.out.println("3 - EDIT korisnika, CheckIN, dodijeli sobu..."); // Bira
 																				// korisnika
 																				// iz
 																				// baze,
@@ -69,9 +65,6 @@ public class ManagementInterface {
 
 				if (opcija == 1) {
 					UserDaoConcrete user = new UserDaoConcrete();
-					/*
-					 * treba metoda za uredan ispis
-					 */
 					ispisiKorisnike(user.getUsers());
 				} else if (opcija == 2) {
 					UserDaoConcrete user = new UserDaoConcrete();
@@ -81,9 +74,11 @@ public class ManagementInterface {
 					unos2.nextLine();
 
 					if (Character.isDigit(podatak.charAt(0))) {
-						user.pretraziUsersIdCard(podatak);
+						ArrayList<User>lista=user.pretraziUsersIdCard(podatak);
+						ispisiKorisnike(lista);
 					} else if (Character.isLetter(podatak.charAt(0))) {
-						user.pretraziUsersName(podatak);
+						ArrayList<User>lista=user.pretraziUsersName(podatak);
+						ispisiKorisnike(lista);
 					} else {
 						System.out.println("Pogresan unos! \n");
 					}

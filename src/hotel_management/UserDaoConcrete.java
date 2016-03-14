@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class UserDaoConcrete implements UserDao {
 
-	public void updateUser(User gost) throws SQLException {
+	public void updateUser(User user) throws SQLException {
 		// metoda sa kojom mozemo da mijejammo ime prezme pol godine sobu i tip
 		// sobe kao i usluge koje nas gost zeli u hotelu
 		// services moramo dodavati kao text u bazu podataka, na slijedeci nacin
@@ -32,18 +32,18 @@ public class UserDaoConcrete implements UserDao {
 		*/
 		// Ovako spremljen string se lakse cita kada nam budu trebale usluge
 
-		String query = "UPDATE users SET name='" + gost.getName() + "', surname='"
-				+ gost.getSurname() + "', gender='" + gost.getGender()
-				+ "', age=" + gost.getAge()
-				+ ", roomNumber=" + gost.getRoomNumber() + ", roomType='"
-				+ gost.getRoomType() + "', checkIn='" + gost.getCheckIn()
-				+ "', checkInMillis=" + gost.getcheckInTimeMillis()
-				+ ", checkOut='" + gost.getCheckOut() + "', checkOutMillis="
-				+ gost.getCheckOutTimeMillis() + ", userName='"
-				+ gost.getUserName() + "', password='" + gost.getPassword()
-				+ /*", services=" + servicesString +*/ "', userLogged="
-				+ gost.userLogged() + " WHERE idCard LIKE '" + gost.getIdCard()
-				+ "'";
+		String query = "UPDATE users set name='" + user.getName()
+				+ "', surname='" + user.getSurname() + "', gender='"
+				+ user.getGender() + "', idCard='" + user.getIdCard()
+				+ "', age=" + user.getAge() + ", roomNumber="
+				+ user.getRoomNumber() + ", roomType='" + user.getRoomType()
+				+ "', checkIn='" + user.getCheckIn() + "', checkInMillis="
+				+ user.getcheckInTimeMillis() + ", checkOut='"
+				+ user.getCheckOut() + "', checkOutMillis="
+				+ user.getCheckOutTimeMillis() + ", userName='"
+				+ user.getUserName() + "', password='" + user.getPassword()
+				+ "', LoggedIn=" + user.userLogged() + " WHERE idCard LIKE '"
+				+ user.getIdCard() + "'";
 		
 		try (Connection connection = ConnectDB.getConnected();
 				Statement statement = connection.createStatement();) {
@@ -54,35 +54,45 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void dodajUser(User gost) throws SQLException {
+	public void dodajUser(User user) throws SQLException {
 		// metoda sa kojom dodajemo gosta u nasu tabelu
 
 		// services moramo dodavati kao text u bazu podataka, na slijedeci nacin
 
-		String query = "INSERT into users(name, surname, gender, idCard, age,checkIn,checkInMillis, userName, password, services, userLogged) VALUES('"
-				+ gost.getName()
+		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn,checkInMillis,checkOut,checkOutMillis, userName, password,LoggedIn) VALUES('"
+				+ user.getName()
 				+ "', '"
-				+ gost.getSurname()
+				+ user.getSurname()
 				+ "', '"
-				+ gost.getGender()
+				+ user.getGender()
 				+ "', '"
-				+ gost.getIdCard()
+				+ user.getIdCard()
 				+ "', "
-				+ gost.getAge()
-				+ ", '0000/00/00"
+				+ user.getAge()
+				+ ", "
+				+ user.getRoomNumber()
+				+ ", '"
+				+ user.getRoomType()
+				+ "', '"
+				+ user.getCheckIn()
 				+ "', "
-				+ "1, '"
-				+ gost.getUserName()
+				+ user.getcheckInTimeMillis()
+				+ ", '"
+				+ user.getCheckOut()
+				+ "', "
+				+ user.getCheckOutTimeMillis()
+				+ ", '"
+				+ user.getUserName()
 				+ "', '"
-				+ gost.getPassword()
-				+ "', '"
-				+ "" + "', true)";
+				+ user.getPassword()
+				+ "',"
+				+ user.userLogged() + ")";
 
 		// Usluge ostaju prazne kada tek prijavljujemo korisnika
 		try (Connection connection = ConnectDB.getConnected();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate(query);
-			System.out.println("Uspjesno dodan gostu tabelu");
+			System.out.println("Uspjesno dodan gost u tabelu");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +131,7 @@ public class UserDaoConcrete implements UserDao {
 	}
 
 	@Override
-	public void pretraziUsersName(String name) throws SQLException {
+	public ArrayList<User> pretraziUsersName(String name) throws SQLException {
 		// trazimo goste u bazi na osnovu imena
 		// Iskljucit cemo ga zasad posto proslijedjujemo podatke kroz metodu
 		// Scanner input = new Scanner(System.in);
@@ -130,9 +140,37 @@ public class UserDaoConcrete implements UserDao {
 		// smjestamo koje ime trazimo
 		// String gostIme = input.next();
 		// query
+		ArrayList<User> gosti = new ArrayList<>();
 		String query = "SELECT * from users WHERE name like '" + name + "'";
 		ResultSet rs = null;
-		// konekcija i izvrsavanje querija
+		try (Connection connection = ConnectDB.getConnected();
+				Statement statement = connection.createStatement();) {
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+
+				User gost = new User();
+				gost.setName(rs.getString("name"));
+				gost.setSurname(rs.getString("surname"));
+				gost.setGender(rs.getString("gender").charAt(0));
+				gost.setIdCard(rs.getString("idCard"));
+				gost.setAge(rs.getInt("age"));
+				gost.setRoomNumber(rs.getInt("roomNumber"));
+				gost.setRoomType(rs.getString("roomType"));
+				gost.copyCheckIn(rs.getString("checkIn"));
+				gost.copyCheckInMillis(rs.getLong("checkInMillis"));
+				gost.copyCheckOut(rs.getString("checkOut"));
+				gost.copyCheckOutMillis(rs.getLong("checkOutMillis"));
+				gost.setUserName(rs.getString("userName"));
+				gost.setPassword(rs.getString("password"));
+				// gost.setUserAktivan(rs.getBoolean("userAktivan"));
+				gost.setUserLogged(rs.getBoolean("userLogged"));
+				gosti.add(gost);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return gosti;
+		/*
 		try (Connection connection = ConnectDB.getConnected();
 				Statement statement = connection.createStatement();) {
 			rs = statement.executeQuery(query);
@@ -145,10 +183,11 @@ public class UserDaoConcrete implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	@Override
-	public void pretraziUsersIdCard(String idCard) throws SQLException {
+	public ArrayList<User> pretraziUsersIdCard(String idCard) throws SQLException {
 		// trazimo goste u bazi na osnovu imena
 		// Iskljucit cemo ga zasad posto proslijedjujemo podatke kroz metodu
 		// Scanner input = new Scanner(System.in);
@@ -157,9 +196,38 @@ public class UserDaoConcrete implements UserDao {
 		// smjestamo koje ime trazimo
 		// String idCard = input.next();
 		// query
-		String query = "SELECT * from users WHERE idCard LIKE '" + idCard + "'";
+		ArrayList<User> gosti = new ArrayList<>();
+		String query = "SELECT * from users WHERE idCard LIKE '"+idCard+"'";
 		ResultSet rs = null;
-		// konekcija i izvrsavanje querija
+		try (Connection connection = ConnectDB.getConnected();
+				Statement statement = connection.createStatement();) {
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+
+				User gost = new User();
+				gost.setName(rs.getString("name"));
+				gost.setSurname(rs.getString("surname"));
+				gost.setGender(rs.getString("gender").charAt(0));
+				gost.setIdCard(rs.getString("idCard"));
+				gost.setAge(rs.getInt("age"));
+				gost.setRoomNumber(rs.getInt("roomNumber"));
+				gost.setRoomType(rs.getString("roomType"));
+				gost.copyCheckIn(rs.getString("checkIn"));
+				gost.copyCheckInMillis(rs.getLong("checkInMillis"));
+				gost.copyCheckOut(rs.getString("checkOut"));
+				gost.copyCheckOutMillis(rs.getLong("checkOutMillis"));
+				gost.setUserName(rs.getString("userName"));
+				gost.setPassword(rs.getString("password"));
+				// gost.setUserAktivan(rs.getBoolean("userAktivan"));
+				gost.setUserLogged(rs.getBoolean("userLogged"));
+				gosti.add(gost);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return gosti;
+		/*
 		try (Connection connection = ConnectDB.getConnected();
 				Statement statement = connection.createStatement();) {
 			rs = statement.executeQuery(query);
@@ -174,6 +242,7 @@ public class UserDaoConcrete implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	// Metoda za provjeru passworda i username i biranje idCard korisnika
@@ -207,7 +276,7 @@ public class UserDaoConcrete implements UserDao {
 				Statement statement = connection.createStatement();) {
 			rs = statement.executeQuery(query);
 			while (rs.next()) {
-
+				
 				User gost = new User();
 				gost.setName(rs.getString("name"));
 				gost.setSurname(rs.getString("surname"));
@@ -216,14 +285,16 @@ public class UserDaoConcrete implements UserDao {
 				gost.setAge(rs.getInt("age"));
 				gost.setRoomNumber(rs.getInt("roomNumber"));
 				gost.setRoomType(rs.getString("roomType"));
-				gost.setCheckIn(rs.getString("checkIn"));
+				gost.copyCheckIn(rs.getString("checkIn"));
+				gost.copyCheckInMillis(rs.getLong("checkInMillis"));
+				gost.copyCheckOut(rs.getString("checkOut"));
+				gost.copyCheckOutMillis(rs.getLong("checkOutMillis"));
 				gost.setUserName(rs.getString("userName"));
 				gost.setPassword(rs.getString("password"));
-				// gost.setServices(kreirajListuUsluge(rs.getString("idCard")));
 				// gost.setUserAktivan(rs.getBoolean("userAktivan"));
 				gost.setUserLogged(rs.getBoolean("userLogged"));
-				gost.setCheckOut(rs.getString("checkOut"));
 				gosti.add(gost);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

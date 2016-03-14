@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ConnectDB {
-	
+
 	static final String username = "root";
 	static final String password = "root";
 
@@ -56,7 +56,7 @@ public class ConnectDB {
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);
-			
+
 			System.out.println("Table rooms created successfully!");
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -69,11 +69,11 @@ public class ConnectDB {
 		String query = "CREATE TABLE users (" + "name VARCHAR(30),"
 				+ "surname VARCHAR(30)," + "gender VARCHAR(10),"
 				+ "idCard VARCHAR(20) NOT NULL," + "age INTEGER(99),"
-				+ "roomNumber INTEGER(50)," + "roomType INTEGER(10),"
+				+ "roomNumber INTEGER(50)," + "roomType VARCHAR(20),"
 				+ "checkIn VARCHAR(20) ," + "checkInMillis BIGINT, "
 				+ "checkOut VARCHAR(20)," + "checkOutMillis BIGINT, "
 				+ "userName VARCHAR(20)," + "password VARCHAR(12),"
-				+ "services TEXT," + "userLogged BOOLEAN" + ")";
+				+ "userLogged BOOLEAN" + ")";
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
 			statement.executeUpdate(query);
@@ -115,11 +115,10 @@ public class ConnectDB {
 			System.out.println(e);
 		}
 	}
-	
-	
+
 	// Insert object into table users
-	public void updateUser(User user) throws SQLException {
-		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn, userName, password,services) VALUES('"
+	public void insertUser(User user) throws SQLException {
+		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn,checkInMillis,checkOut,checkOutMillis, userName, password,LoggedIn) VALUES('"
 				+ user.getName()
 				+ "', '"
 				+ user.getSurname()
@@ -131,12 +130,49 @@ public class ConnectDB {
 				+ user.getAge()
 				+ ", "
 				+ user.getRoomNumber()
-				+ ", "
-				+ user.getRoomType()
 				+ ", '"
-				+ user.getCheckIn()
+				+ user.getRoomType()
 				+ "', '"
-				+ user.getUserName() + "', '" + user.getPassword() +"',',"+ "')";
+				+ user.getCheckIn()
+				+ "', "
+				+ user.getcheckInTimeMillis()
+				+ ", '"
+				+ user.getCheckOut()
+				+ "', "
+				+ user.getCheckOutTimeMillis()
+				+ ", '"
+				+ user.getUserName()
+				+ "', '"
+				+ user.getPassword()
+				+ "',"
+				+ user.userLogged() + ")";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table users updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+
+	// Update user information
+	/**
+	 * Ukoliko dodamo jos jednu tabelu services onda treba i te podatke update
+	 */
+	public void updateUser(User user) throws SQLException {
+		String query = "UPDATE users set name='" + user.getName()
+				+ "', surname='" + user.getSurname() + "', gender='"
+				+ user.getGender() + "', idCard='" + user.getIdCard()
+				+ "', age=" + user.getAge() + ", roomNumber="
+				+ user.getRoomNumber() + ", roomType='" + user.getRoomType()
+				+ "', checkIn='" + user.getCheckIn() + "', checkInMillis="
+				+ user.getcheckInTimeMillis() + ", checkOut='"
+				+ user.getCheckOut() + "', checkOutMillis="
+				+ user.getCheckOutTimeMillis() + ", userName='"
+				+ user.getUserName() + "', password='" + user.getPassword()
+				+ "', LoggedIn=" + user.userLogged() + " WHERE idCard LIKE '"
+				+ user.getIdCard() + "'";
 
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 
@@ -191,37 +227,6 @@ public class ConnectDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-	}
-
-	// Main metodu smo prebacili u ManagementInterface
-	// Glavna metoda(za provjeru)
-	public static void main(String[] args) throws SQLException {
-		// samo proba da li radi
-		ConnectDB db = new ConnectDB();
-		db.createDB();
-		db.createTableRooms();
-		db.createTableUsers();
-		db.createTableServices();
-
-		ArrayList<Room> list = new ArrayList<>();
-		list.add(new Room(1, "1-bed", 20, false));
-		list.add(new Room(2, "1-bed", 20, false));
-		list.add(new Room(3, "1-bed", 20, false));
-		list.add(new Room(4, "1-bed", 20, false));
-		list.add(new Room(5, "2-bed", 30, false));
-		list.add(new Room(6, "2-bed", 30, false));
-		list.add(new Room(7, "2-bed", 30, false));
-		list.add(new Room(8, "2-bed", 30, false));
-		list.add(new Room(9, "apartment", 40, false));
-		list.add(new Room(10, "apartment", 40, false));
-		list.add(new Room(11, "apartment", 40, false));
-		list.add(new Room(12, "apartment", 40, false));
-
-		for (int i = 0; i < 12; i++) {
-			db.updateRoom(list.get(i));
-		}
-
-		System.out.println("Pozdrav");
 	}
 
 }
