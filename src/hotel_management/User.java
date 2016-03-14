@@ -110,9 +110,10 @@ public class User {
 		this.roomType = roomType;
 	}
 	
-	public void synchronizeRoomTypeAndNumber(){
+	public void synchronizeRoomTypeAndNumber() throws SQLException{
 		int number=getRoomNumber();
 		
+		if(number!=0){
 		String query = "SELECT type FROM rooms WHERE number="+number;
 		
 		try(Connection connection = ConnectDB.getConnected();
@@ -126,6 +127,9 @@ public class User {
 			
 		}catch (SQLException e){
 			System.out.println(e.toString());
+		}
+		}else {
+			setRoomType("");
 		}
 	}
 

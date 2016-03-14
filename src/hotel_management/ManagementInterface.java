@@ -98,12 +98,16 @@ public class ManagementInterface {
 				System.out.println("6 - OBRISI KORISNIKA");
 				System.out.println("0 - izlaz");
 				int opcija = unos2.nextInt();
+				unos2.nextLine();
 
 				UserDaoConcrete user = new UserDaoConcrete();
-
+				String idCard="";
+				
+				if(opcija>=1||opcija<=6){
 				System.out.println("Unesite maticni broj korisnika:");
-				String idCard = unos2.next();
-
+				idCard = unos2.next();
+				unos2.nextLine();
+				}
 				ArrayList<User> listaKorisnika = user.getUsers();
 				User korisnik = null;
 				boolean korisnikPostoji = false;
@@ -121,23 +125,26 @@ public class ManagementInterface {
 				} else {
 
 					if (opcija == 1) {
+						//CheckIn
 						user.checkInUser(idCard);
 						ArrayList<User>lista=user.pretraziUsersIdCard(idCard);
 						ispisiKorisnike(lista);
 					} else if (opcija == 2) {
+						//CheckOut
 						user.checkOutUser(idCard);
 						ArrayList<User>lista=user.pretraziUsersIdCard(idCard);
 						ispisiKorisnike(lista);
 					} else if (opcija == 3) {
+						//Rezervisi sobu
 						System.out.println("Unesite broj sobe");
 						int roomNumber = unos2.nextInt();
+						unos2.nextLine();
 
 						RoomDaoConcrete slobodnaSoba = new RoomDaoConcrete();
 						if (slobodnaSoba.isFreeRoom(roomNumber)) {
 							slobodnaSoba.occupyRoom(roomNumber);
 							korisnik.setRoomNumber(roomNumber);
 							korisnik.synchronizeRoomTypeAndNumber();
-							korisnik.setRoomType(korisnik.getRoomType());
 							user.updateUser(korisnik);
 							ArrayList<User>lista=user.pretraziUsersIdCard(idCard);
 							ispisiKorisnike(lista);
@@ -145,17 +152,19 @@ public class ManagementInterface {
 							System.out.println("Soba je zauzeta");
 						}
 					} else if (opcija == 4) {
+						//Odjavi sobu
 						int roomNumber = korisnik.getRoomNumber();
 
 						RoomDaoConcrete slobodnaSoba = new RoomDaoConcrete();
-						slobodnaSoba.occupyRoom(roomNumber);
+						slobodnaSoba.vacateRoom(roomNumber);
 						korisnik.setRoomNumber(0);
 						korisnik.synchronizeRoomTypeAndNumber();
-						korisnik.setRoomType(korisnik.getRoomType());
 						user.updateUser(korisnik);
 					} else if (opcija == 5) {
+						//Update informacije
 						user.updateUser(updateProfil(idCard));
 					}else if(opcija==6){
+						//Obrisi korisnika
 						user.obrisiUser(idCard);
 					}
 
