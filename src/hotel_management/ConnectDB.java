@@ -218,7 +218,7 @@ public class ConnectDB {
 
 	// Delete object from table Usluge
 	public void obrisiUsluge(int idUsluge) throws SQLException {
-		String query = "DELETE FROM services where idUsluge=" + idUsluge;
+		String query = "DELETE FROM services where idUsluge LIKE '" + idUsluge+"'";
 
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
 

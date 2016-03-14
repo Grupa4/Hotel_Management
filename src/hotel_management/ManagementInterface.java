@@ -98,6 +98,7 @@ public class ManagementInterface {
 				System.out.println("3 - rezervisi sobu");
 				System.out.println("4 - odjavi sobu");
 				System.out.println("5 - EDIT korisnika");
+				System.out.println("6 - OBRISI KORISNIKA");
 				System.out.println("0 - izlaz");
 				int opcija = unos2.nextInt();
 
@@ -151,6 +152,8 @@ public class ManagementInterface {
 						user.updateUser(korisnik);
 					} else if (opcija == 5) {
 						user.updateUser(updateProfil(idCard));
+					}else if(opcija==6){
+						user.obrisiUser(idCard);
 					}
 
 				}

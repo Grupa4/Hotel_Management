@@ -8,6 +8,8 @@ public interface UserDao {
 	public void updateUser(User gost) throws SQLException;
 
 	public void dodajUser(User gost) throws SQLException;
+	
+	public void obrisiUser(String idCard) throws SQLException;
 
 	public void odjaviUser(String idCard) throws SQLException;
 

@@ -97,6 +97,19 @@ public class UserDaoConcrete implements UserDao {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void obrisiUser(String idCard) throws SQLException{
+		String query = "DELETE FROM services where idUsluge LIKE '" + idCard+"'";
+
+		try (Statement statement = ConnectDB.getConnected().createStatement();) {
+
+			statement.executeUpdate(query);
+			System.out.println("Table Users updated successfully!");
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
 
 	@Override
 	public void odjaviUser(String idCard) throws SQLException {
