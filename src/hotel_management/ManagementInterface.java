@@ -347,10 +347,6 @@ public class ManagementInterface {
 		char gender = unos.next().charAt(0);
 		System.out.println("Unesite godine:");
 		int age = unos.nextInt();
-		System.out.println("Unesite broj sobe:");
-		int roomNumber = unos.nextInt();
-		System.out.println("Unesite tip sobe:");
-		int roomType = unos.nextInt();
 		System.out.println("Unesite korisnicko ime:");
 		String userName = unos.next();
 		System.out.println("Unesite password:");
