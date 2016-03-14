@@ -70,8 +70,8 @@ public class ConnectDB {
 				+ "surname VARCHAR(30)," + "gender VARCHAR(10),"
 				+ "idCard VARCHAR(20) NOT NULL," + "age INTEGER(99),"
 				+ "roomNumber INTEGER(50)," + "roomType INTEGER(10),"
-				+ "checkIn DATE ," + "checkInMillis BIGINT, "
-				+ "checkOut DATE," + "checkOutMillis BIGINT, "
+				+ "checkIn VARCHAR(20) ," + "checkInMillis BIGINT, "
+				+ "checkOut VARCHAR(20)," + "checkOutMillis BIGINT, "
 				+ "userName VARCHAR(20)," + "password VARCHAR(12),"
 				+ "services TEXT," + "userLogged BOOLEAN" + ")";
 		try (Statement statement = ConnectDB.getConnected().createStatement();) {
