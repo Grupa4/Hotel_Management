@@ -1,5 +1,6 @@
 package hotel_management;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ public class User {
 	private String idCard;
 	private int age;
 	private int roomNumber;
-	private int roomType;
+	private String roomType;
 	private long checkInTimeMillis;
 	private String checkIn;
 	private String userName;
@@ -33,15 +34,15 @@ public class User {
 	}
 
 	// Constructor with specified arguments
-	public User(String name, String surname, char gender, String idCard, int age, int roomNumber, int roomType,
+	public User(String name, String surname, char gender, String idCard, int age,
 			String userName, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.idCard = idCard;
 		this.age = age;
-		this.roomNumber = roomNumber;
-		this.roomType = roomType;
+		this.roomNumber = 0;
+		this.roomType = "";
 		this.userName = userName;
 		this.password = password;
 		this.checkIn="";
@@ -101,12 +102,31 @@ public class User {
 		this.roomNumber = roomNumber;
 	}
 
-	public int getRoomType() {
+	public String getRoomType() {
 		return roomType;
 	}
 
-	public void setRoomType(int roomType) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
+	}
+	
+	public void synchronizeRoomTypeAndNumber(){
+		int number=getRoomNumber();
+		
+		String query = "SELECT type FROM rooms WHERE number="+number;
+		
+		try(Connection connection = ConnectDB.getConnected();
+			Statement statement = connection.createStatement();) {
+			
+			ResultSet resultSet = statement.executeQuery(query);
+			resultSet.next();
+			
+			String type=resultSet.getString(1);
+			setRoomType(type);
+			
+		}catch (SQLException e){
+			System.out.println(e.toString());
+		}
 	}
 
 	public String getCheckIn() {
@@ -221,7 +241,7 @@ public class User {
 		int brojDana=(int)(razlikaMillis/(1000*60*60*24));
 		
 		//Trebamo smisliti kako cijene soba odredjivati, npr.
-		double cijenaSobe=this.roomType*10;
+		double cijenaSobe=getCijenaSobe();
 		
 		//Obracun svih dodatnih usluga
 		double ukupnaCijenaUsluga=0;
@@ -233,4 +253,28 @@ public class User {
 		
 		return ukupanRacun;
 	}
+	
+	//Metoda za uzimanje cijene sobe iz baze
+	public int getCijenaSobe(){
+		int number=getRoomNumber();
+		int cijena=0;
+		
+		if (number!=0) {
+		String query = "SELECT dayPrice FROM rooms WHERE number="+number;
+		
+		try(Connection connection = ConnectDB.getConnected();
+			Statement statement = connection.createStatement();) {
+			
+			ResultSet resultSet = statement.executeQuery(query);
+			resultSet.next();
+			
+			cijena=resultSet.getInt(1);
+		}catch (SQLException e){
+			System.out.println(e.toString());
+		}
+		return cijena;
+		}else {
+			return cijena;
+		}
+	}//Kraj metode
 }

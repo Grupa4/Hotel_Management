@@ -215,7 +215,7 @@ public class UserDaoConcrete implements UserDao {
 				gost.setIdCard(rs.getString("idCard"));
 				gost.setAge(rs.getInt("age"));
 				gost.setRoomNumber(rs.getInt("roomNumber"));
-				gost.setRoomType(rs.getInt("roomType"));
+				gost.setRoomType(rs.getString("roomType"));
 				gost.setCheckIn(rs.getString("checkIn"));
 				gost.setUserName(rs.getString("userName"));
 				gost.setPassword(rs.getString("password"));
