@@ -39,14 +39,11 @@ public class ManagementInterface {
 			// podataka
 			System.out.println("4 - provjeri sobe"); // Ispisuje listu (tabelu)
 														// soba
-			System.out.println("5 - rezervisi sobu"); // Rezervise i salje u
-														// bazu
-			System.out.println("6 - odjavi sobu"); // Odjavljuje i salje u bazu
-			System.out.println("7 - provjeri usluge");// Ispisuje listu usluga
-			System.out.println("8 - dodaj usluge");// dodaje usluge hotela u
+			System.out.println("5 - provjeri usluge");// Ispisuje listu usluga
+			System.out.println("6 - dodaj usluge");// dodaje usluge hotela u
 													// bazu
-			System.out.println("9 - brisi usluge");// Brise usluge hotela u bazi
-			System.out.println("10 - EDIT usluge ");// mijenja karakteristike
+			System.out.println("7 - brisi usluge");// Brise usluge hotela u bazi
+			System.out.println("8 - EDIT usluge ");// mijenja karakteristike
 													// usluga
 													// u bazi
 			System.out.println("0 - IZLAZ");
@@ -125,8 +122,12 @@ public class ManagementInterface {
 
 					if (opcija == 1) {
 						user.checkInUser(idCard);
+						ArrayList<User>lista=user.pretraziUsersIdCard(idCard);
+						ispisiKorisnike(lista);
 					} else if (opcija == 2) {
 						user.checkOutUser(idCard);
+						ArrayList<User>lista=user.pretraziUsersIdCard(idCard);
+						ispisiKorisnike(lista);
 					} else if (opcija == 3) {
 						System.out.println("Unesite broj sobe");
 						int roomNumber = unos2.nextInt();
@@ -138,6 +139,8 @@ public class ManagementInterface {
 							korisnik.synchronizeRoomTypeAndNumber();
 							korisnik.setRoomType(korisnik.getRoomType());
 							user.updateUser(korisnik);
+							ArrayList<User>lista=user.pretraziUsersIdCard(idCard);
+							ispisiKorisnike(lista);
 						} else {
 							System.out.println("Soba je zauzeta");
 						}
@@ -174,34 +177,18 @@ public class ManagementInterface {
 				}
 
 			} else if (izbor == 5) {
-				// Rezervisanje sobe
-				RoomDaoConcrete soba = new RoomDaoConcrete();
-
-				System.out.println("Unesite broj sobe");
-				int brojSobe = unos.provjeraInt();
-				soba.occupyRoom(brojSobe);
-
-			} else if (izbor == 6) {
-				// Odjava sobe
-				RoomDaoConcrete soba = new RoomDaoConcrete();
-
-				System.out.println("Unesite broj sobe");
-				int brojSobe = unos.provjeraInt();
-				soba.vacateRoom(brojSobe);
-
-			} else if (izbor == 7) {
 				// Provjera usluga koje nudi hotel
 				UslugeDaoConcrete usluga = new UslugeDaoConcrete();
 				ispisiUsluge(usluga.getUsluge());
-			} else if (izbor == 8) {
+			} else if (izbor == 6) {
 				// Dodavanje usluga koje nudi hotel
 				UslugeDaoConcrete usluga = new UslugeDaoConcrete();
 				usluga.dodajUsluge();
-			} else if (izbor == 9) {
+			} else if (izbor == 7) {
 				// Brisanje usluga koje nudi hotel
 				UslugeDaoConcrete usluga = new UslugeDaoConcrete();
 				usluga.obrisiUsluge();
-			} else if (izbor == 10) {
+			} else if (izbor == 8) {
 				// Uredjvanje usluga
 				UslugeDaoConcrete usluga = new UslugeDaoConcrete();
 				usluga.updateUsluge();

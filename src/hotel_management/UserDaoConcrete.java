@@ -42,7 +42,7 @@ public class UserDaoConcrete implements UserDao {
 				+ user.getCheckOut() + "', checkOutMillis="
 				+ user.getCheckOutTimeMillis() + ", userName='"
 				+ user.getUserName() + "', password='" + user.getPassword()
-				+ "', LoggedIn=" + user.userLogged() + " WHERE idCard LIKE '"
+				+ "', userLogged=" + user.userLogged() + " WHERE idCard LIKE '"
 				+ user.getIdCard() + "'";
 		
 		try (Connection connection = ConnectDB.getConnected();
@@ -59,7 +59,7 @@ public class UserDaoConcrete implements UserDao {
 
 		// services moramo dodavati kao text u bazu podataka, na slijedeci nacin
 
-		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn,checkInMillis,checkOut,checkOutMillis, userName, password,LoggedIn) VALUES('"
+		String query = "INSERT INTO users(name, surname, gender, idCard, age, roomNumber, roomType,  checkIn,checkInMillis,checkOut,checkOutMillis, userName, password,userLogged) VALUES('"
 				+ user.getName()
 				+ "', '"
 				+ user.getSurname()
